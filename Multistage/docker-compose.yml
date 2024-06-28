@@ -1,0 +1,20 @@
+services:
+  buildbig:
+    image: schulung/goexample:big
+    build: 
+      context: .
+      no_cache: true
+  buildsmall:
+    image: schulung/goexample:small
+    build: 
+      context: .
+      dockerfile: Dockerfile-multi 
+      no_cache: true
+    depends_on: 
+    - buildbig
+  finish:
+    image: alpine
+    command: "echo finished"
+    depends_on:
+    - buildsmall
+    - buildbig 
